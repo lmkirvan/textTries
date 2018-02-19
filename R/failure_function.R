@@ -1,7 +1,7 @@
 #test_trie
 add_rootnodes <- function(trie){
   for(child in trie$children){
-    child$Set(fail = "trie_root")
+    child$Set(fail = trie$root$path, traversal = "ancestor")
   }
 }
 
@@ -14,40 +14,40 @@ dequeue <- function(queue){
 }
 
 fail_node <- function(node){
-  for(child in seq_along(node$children)){
-    check_for_failure(node$children[[child]], node)
+  if(is.null(node$children)){
+    NULL
+  } else {
+    for(child in node$children){
+        check_for_failure(child, node)
+    }
   }
 }
 
 check_for_failure <- function(node_child, node){
-  fail <- node$failure
-  d
+
   if(is.null(node$children)){
     NULL
-  } else if(node_child$name %in% names(fail[[1]]$children)){
-    node_child$Set(fail = fail[[1]]$children[[node_child$name]])
-    #is it okay to assign null values here?
-    if(!is.null(fail[[1]]$children[[node_child$name]]$output)){
-      node_child$Set(key_link = fail[[1]]$children[[node_child$name]]$output)
-    } else {
-      break()
-    }
+  } else if(node_child$name  %in% fail_children){
+    path_to_fail <- node$fail$children[[name(node_child)]]$path
+    node_child$Set(fail = path_to_fail)
   } else {
     check_for_failure(node_child, node$fail)
     }
   }
 
+
 add_fails <- function(trie) {
   add_rootnodes(trie)
-  queue <- list()
-  queue <- map(trie$root$children, .f = enqueue, queue = queue)
+  queue <- NULL
+  queue <- enqueue(trie$root$children, queue)
 
   while(length(queue) > 0){
     fail_node(queue[[1]])
-    print(length(queue))
+    enqueue(queue = queue, nodes = queue[[1]]$children)
     dequeue(queue = queue)
   }
 
   }
 
 
+add_fails(test_trie)
