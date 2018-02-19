@@ -51,6 +51,7 @@ trie_insert <- function(trie, key, value){
   return(trie)
   }
 
+
 trie_create <- function(keys, values){
 
   trie <- Node$new("trie_root")
@@ -62,9 +63,6 @@ trie_create <- function(keys, values){
 
   trie
 }
-
-
-str_sub()
 
 test_trie <- Node$new("trie_root")
 test_trie <- trie_insert(trie = test_trie, key = "a", value = "TEST")
@@ -81,12 +79,11 @@ test_trie
 test <- c("a", "ab", "bab", "bc", "bca", "c", "caa")
 
 test_trie <- trie_create(test, value = rep("test", length(test)))
+
 test_trie
 
 bab <- trie_find("bab", trie = test_trie)
 bab$parent
 
-suffix_func(key = "bab", trie = test_trie)
 test_trie$b$a$b$s
-
 trie_find("ca", test_trie)
