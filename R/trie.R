@@ -45,9 +45,8 @@ trie_insert <- function(trie, key, value){
       trie_build(char_key, trie)
     }
   node <- trie_find(key, trie)
-  node$Set(output = key)
-  node$Set(value = value)
-  node$Set(is_final = T)
+  node$output <- key
+  node$value <- value
   return(trie)
   }
 
@@ -63,6 +62,7 @@ trie_create <- function(keys, values){
 
   trie
 }
+
 
 test_trie <- Node$new("trie_root")
 test_trie <- trie_insert(trie = test_trie, key = "a", value = "TEST")
