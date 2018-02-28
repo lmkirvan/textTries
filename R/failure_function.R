@@ -1,23 +1,4 @@
 #test_trie
-add_rootnodes <- function(trie){
-  for(child in trie$children){
-    child$fail <- trie$root
-  }
-}
-
-enqueue <- function(nodes, queue){
-  if(!is.null(nodes)){
-    c(queue, nodes)
-  } else {
-    queue
-  }
-
-}
-
-dequeue <- function(queue){
-  cdr(queue)
-}
-
 fail_node <- function(node){
   if(is.null(node$children)){
     NULL
@@ -49,15 +30,10 @@ add_fails <- function(trie) {
     fail_node(queue[[1]])
     queue <- enqueue(queue = queue, nodes = queue[[1]]$children)
     queue <- dequeue(queue = queue)
-    print(length(queue))
   }
 }
 
-#queue <- NULL
-#queue <- enqueue(test_trie$root$children, queue = queue)
-#fail_node(queue[[1]])
 
-add_fails(test_trie)
 
 
 
