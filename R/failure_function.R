@@ -14,6 +14,7 @@ check_for_fails <- function(self){
       self$fail <- self$parent$fail$children[[self$name]]
       if(!is.null(self$parent$fail$children[[self$name]]$output)){
         self$output <- self$parent$fail$children[[self$name]]$output
+        self$value <- self$parent$fail$children[[self$name]]$value
       }
     } else {
       self$fail <- NULL
