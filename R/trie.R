@@ -1,8 +1,8 @@
 #' Title
 #'
-#' @param trie 
-#' @param key 
-#' @param value 
+#' @param trie
+#' @param key
+#' @param value
 #'
 #' @return
 #' @export
@@ -17,9 +17,9 @@ trie_insert <- function(trie, key, value) {
       trie_build(cdr(key), trie$children[[key[1]]])
     }
   }
-  
+
   char_key <- purrr::flatten_chr(stringr::str_split(key, pattern = ""))
-  
+
   if (head(char_key, 1) %in% names(trie$children)) {
     if (length(cdr(char_key)) == 0) {
       trie
@@ -40,20 +40,21 @@ trie_insert <- function(trie, key, value) {
 #'
 #' Each node's formal name is a single character. You can traverse to the node
 #' of a key in the trie by splitting a key into characters and then traverseing
-#' from parent to child node. This is really just a helper function. 
+#' from parent to child node. This is really just a helper function.
 #'
-#' @param key the key to search for 
-#' @param trie the trie to search for 
+#' @param key the key to search for
+#' @param trie the trie to search for
 #'
 #' @return the trie node that corresponds to the key
-#' @export 
+#' @export
 #'
 #' @examples
 #'test <- c("a", "ab", "bab", "bc", "bca", "c", "caa")
-#'example_trie <- trie_create(test, value = rep("foo", length(test)))
-#'key_traverse("c", test_trie)
-#'key_traverse("ca", test_trie)
-#'key_traverse("caa", test_trie)
+#'values <- c("foo", "bar", "foo", "bar", "foo", "bar", "foo", "bar")
+#'example_trie <- trie_create(test, value = values)
+#'key_traverse("c", example_trie)
+#'key_traverse("ca", example_trie)
+#'key_traverse("caa", example_trie)
 key_traverse <- function(key, trie){
   key <- purrr::flatten_chr(stringr::str_split(key, pattern = ""))
   for(i in seq_along(key)){
@@ -79,22 +80,19 @@ key_traverse <- function(key, trie){
 #'@examples
 #'keys <- c("a", "ab", "bab", "bc", "bca", "c", "caa", "abc")
 #'values <- c("foo", "bar", "foo", "bar", "foo", "bar", "foo", "bar")
-#'example_trie <- trie_create(test, value = rep("foo", length(test)))
+#'example_trie <- trie_create(keys, value = values)
 #'example_trie
 #'example_trie$a$b$fail
 trie_create <- function(keys, values){
-  
   if(length(keys) != length(values)){
     stop("Your key and values should be the same length")
   }
-
   trie <- Node$new("trie_root")
   purrr::map2(
     .x = keys,
     .y = values,
     .f = function(x, y) trie_insert(trie, key = x, value = y)
     )
-
   add_fails(trie)
   trie
 }
