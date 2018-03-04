@@ -18,16 +18,13 @@ trie_find <- function(document, trie){
           value = trie$value,
           output = trie$output,
           index = i)
+      } else {
+        NULL
       }
     }
   }
   result
 }
-
-
-
-
-
 
 
 

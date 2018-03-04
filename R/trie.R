@@ -1,14 +1,24 @@
-#' Title
+#' Insert new key value pairs into a trie.
 #'
-#' @param trie
-#' @param key
-#' @param value
+#' This can be used to insert new key-value pairs into an existing trie. It's
+#' also the engine used in trie creation
 #'
-#' @return
+#' @param trie a trie to update
+#' @param key the replacement keyword
+#' @param value the value that will be used to replace keywords when using
+#' trie replace
+#'
+#' @return an updated trie
 #' @export
 #'
 #' @examples
+#'test <- c("a", "ab", "bab", "bc", "bca", "c", "caa", "abc")
+#'values <- c("foo", "bar", "foo", "bar", "foo", "bar", "foo", "bar")
+#'example_trie <- trie_create(test, value = values)
+#'trie_insert(example_trie, key = "dab", value = "foo")
+#'#'trie_insert(example_trie, key = "cad", value = "bar")
 trie_insert <- function(trie, key, value) {
+
   trie_build <- function(key, trie) {
     if (length(key) == 1) {
       trie$AddChild(key)
@@ -18,23 +28,22 @@ trie_insert <- function(trie, key, value) {
     }
   }
 
-  char_key <- purrr::flatten_chr(stringr::str_split(key, pattern = ""))
+  chars <- split_flat(key)
 
-  if (head(char_key, 1) %in% names(trie$children)) {
-    if (length(cdr(char_key)) == 0) {
+  if (head(chars, 1) %in% names(trie$children)) {
+    if (length(cdr(chars)) == 0) {
       trie
     } else {
-      trie_insert(trie$children[[char_key[1]]], cdr(char_key), value = NULL)
+      trie_insert(trie$children[[chars[1]]], cdr(chars), value = NULL)
     }
   } else {
-    trie_build(char_key, trie)
+    trie_build(chars, trie)
   }
   node <- key_traverse(key, trie)
   node$output <- key
   node$value <- value
   return(trie)
 }
-
 
 #' Traverse the trie to a particular node by full key name.
 #'
@@ -49,7 +58,7 @@ trie_insert <- function(trie, key, value) {
 #' @export
 #'
 #' @examples
-#'test <- c("a", "ab", "bab", "bc", "bca", "c", "caa")
+#'test <- c("a", "ab", "bab", "bc", "bca", "c", "caa", "abc")
 #'values <- c("foo", "bar", "foo", "bar", "foo", "bar", "foo", "bar")
 #'example_trie <- trie_create(test, value = values)
 #'key_traverse("c", example_trie)
@@ -65,7 +74,7 @@ key_traverse <- function(key, trie){
       }
     }
   trie
-  }
+}
 
 #'Create the finite state automaton.
 #'
@@ -91,11 +100,8 @@ trie_create <- function(keys, values){
   purrr::map2(
     .x = keys,
     .y = values,
-    .f = function(x, y) trie_insert(trie, key = x, value = y)
-    )
+    .f = function(x, y) trie_insert(trie, key = x, value = y))
   add_fails(trie)
   trie
 }
-
-
 

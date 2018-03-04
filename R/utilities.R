@@ -6,6 +6,9 @@ cdr_char <- function(atom_char){
   stringr::str_sub(atom_char, 2, nchar(atom_char))
 }
 
+split_flat <- function(x){
+  purrr::flatten_chr(stringr::str_split(x, ""))
+}
 
 enqueue <- function(nodes, queue){
   if(!is.null(nodes)){
@@ -13,7 +16,7 @@ enqueue <- function(nodes, queue){
   } else {
     queue
   }
-  
+
 }
 
 dequeue <- function(queue){
@@ -41,6 +44,6 @@ add_rootnodes <- function(trie){
   )
   toset <- !(names(op.devtools) %in% names(op))
   if(any(toset)) options(op.devtools[toset])
-  
+
   invisible()
 }
