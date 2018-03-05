@@ -25,7 +25,7 @@ check_for_dicts <- function(self, current_fail){
 
 check_for_fails <- function(self, current_fail = self$parent$fail){
   if(is.null(current_fail)){
-    NULL
+    self$fail <- self$root
   } else if(self$name %in% names(current_fail)){
       self$fail <- current_fail$children[[self$name]]
       if(!is.null(current_fail$children[[self$name]]$output)){
