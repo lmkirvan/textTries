@@ -31,3 +31,12 @@ add_rootnodes <- function(trie){
 }
 
 
+get_attribute <- function(self, attribute) {
+  if(is.null(self[[attribute]])){
+    NULL
+  } else {
+    this <- self[[attribute]]
+    c(this, get_attribute(self$fail, attribute))
+  }
+}
+
