@@ -4,7 +4,6 @@ find_trie <- function(document, trie){
   result <- list()
   for(i in index){
     character <- characters[i]
-<<<<<<< HEAD
     while(isRoot(trie) == F & !character %in% names(trie$children)){
       trie <- trie$fail
     }
@@ -18,13 +17,6 @@ find_trie <- function(document, trie){
         )} else{
           NULL
         }
-=======
-    while(isRoot(trie)==F & !character %in% names(trie$children)){
-      trie <- trie$fail
-    }
-    if(isRoot(trie)){
-      NULL
->>>>>>> ea493652bcd1efae189ac7f8259e1f6ae8c7f7d1
       } else {
         trie <- trie[[character]]
         result[[i]] <- list(
@@ -38,20 +30,5 @@ find_trie <- function(document, trie){
   }
 
 
-
-
-<<<<<<< HEAD
-=======
-#problem with getting stuck at rootnode and not progressing forward.
-keys <- c("a", "ab", "bab", "bc", "bca", "c", "caa", "baby")
-values <- c("foo", "bar", "foo", "bar", "foo", "bar", "foo", "bar")
-example_trie <- trie_create(keys = keys, value = values)
-find_string <- "sdfl;khasdfl;knabccbabysdflsdfalkjdfs"
-
-temp <- find_trie(find_string, example_trie)
-
-
-
->>>>>>> ea493652bcd1efae189ac7f8259e1f6ae8c7f7d1
 
 
