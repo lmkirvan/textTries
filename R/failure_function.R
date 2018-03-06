@@ -9,7 +9,6 @@ fail_node <- function(node){
   }
 }
 
-
 check_for_dicts <- function(self, current_fail){
   if(is.null(current_fail)){
     NULL
