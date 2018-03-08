@@ -1,5 +1,5 @@
 testthat::context("creating trie")
-require(data.tree)
+require(textTries)
 
 
 test_that("values are correct",{
@@ -21,6 +21,7 @@ test_that("fails are correct", {
   expect_equal(example_trie$c$a$fail, example_trie$a)
   expect_equal(example_trie$c$a$a$fail, example_trie$a)
   expect_equal(example_trie$a$fail, example_trie)
+  expect_equal(example_trie$b$a$b$y$fail, example_trie)
 })
 
 

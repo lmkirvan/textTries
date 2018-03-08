@@ -15,7 +15,9 @@ Description: This package uses the data.tree package to create
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-Imports: data.tree,
-    stringr,
-    purrr
+Imports: stringr,
+    purrr,
+    dplyr
+Depdends: data.tree
 Suggests: testthat
+Depends: data.tree
