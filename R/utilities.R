@@ -51,7 +51,7 @@ get_attribute <- function(self, attribute) {
     NULL
   } else {
     this <- self[[attribute]]
-    unique(c(this, get_attribute(self$fail, attribute)))
+    c(this, get_attribute(self$fail, attribute))
   }
 
 }
