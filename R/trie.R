@@ -85,6 +85,9 @@ key_traverse <- function(key, trie){
 #'@param keys these are the words that you want to search for in the trie
 #'@param values these are optional, but if you will need to supply them if you
 #'  want to use the replace method.
+#'@param to_lower are your keys case sensitive? If so, this should be false.
+#'@param whole_words_only do you want to pad your keys with whitespace to find
+#'  only those that are whole words? If so select this should be true
 #'@return a reference class object of class node from the data.tree package.
 #'@examples
 #'keys <- c("a", "ab", "bab", "bc", "bca", "c", "caa", "abc")
@@ -92,16 +95,37 @@ key_traverse <- function(key, trie){
 #'example_trie <- trie_create(keys, value = values)
 #'example_trie
 #'example_trie$a$b$fail
-trie_create <- function(keys, values){
+trie_create <- function(keys, values, to_lower = TRUE, whole_words_only = TRUE){
   if(length(keys) != length(values)){
     stop("Your key and values should be the same length")
   }
+  
+  if(to_lower){
+    keys <- tolower(keys)
+  }
+  
+  if(whole_words_only){
+    keys <- stringr::str_c(" ", keys, " ")
+  }
+  
+  
   trie <- Node$new("trie_root")
   purrr::map2(
     .x = keys,
     .y = values,
     .f = function(x, y) trie_insert(trie, key = x, value = y))
   add_fails(trie)
+
+  if(whole_words_only == T){
+    trie$whole_words <- TRUE
+  } else {
+    trie$whole_words <- FALSE
+  }
+  
   trie
+    
+  
 }
+
+
 
