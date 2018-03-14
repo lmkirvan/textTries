@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-trie_find <- function(document, trie, border_chars = c("!", ",", ".", "?", ";", ":")){
+trie_find <- function(document, trie, border_chars = c("!", ",", ".", "?", ";", ":", "\n", "\t"), raw = F){
   
   characters <- purrr::flatten_chr(stringr::str_split(document, ""))
   
@@ -50,10 +50,17 @@ trie_find <- function(document, trie, border_chars = c("!", ",", ".", "?", ";", 
             index = i)
         } else {
           NULL
-        }
+          }
       }
     }
-  result_to_df(result, whole_words = whole_words)
+  
+  if(raw == T){
+    result_to_df(result, whole_words = whole_words)
+  } else {
+    rebuild_document(document, result_to_df(result, whole_words = whole_words))
+  }
+  
+  
   }
 
 
@@ -100,5 +107,23 @@ str_replace_border_chars <- function(char, border_chars){
   }
   
 }
+
+
+rebuild_document <- function(document, df){
+  
+  not_inverted <- as.array(cbind(df$start -2, df$end))
+  dimnames(not_inverted) <- list(NULL, c("start", "end"))
+  inverted <- stringr::invert_match(not_inverted)
+  
+  other_text <- stringr::str_sub(text, start = inverted) 
+  
+  final <- c(rbind(other_text, df$value))
+  final <- stringr::str_c(final, collapse = "")
+  
+  final
+  
+}
+
+
 
 

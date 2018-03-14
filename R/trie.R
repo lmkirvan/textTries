@@ -81,15 +81,15 @@ key_traverse <- function(key, trie){
 #'AKA the trie with failure attributes built in. This will need to be run one
 #'time and then can be used for both find and replace functions.
 #'
-#'@export
-#'@param keys these are the words that you want to search for in the trie
-#'@param values these are optional, but if you will need to supply them if you
+#' @param keys these are the words that you want to search for in the trie
+#' @param values these are optional, but if you will need to supply them if you
 #'  want to use the replace method.
-#'@param to_lower are your keys case sensitive? If so, this should be false.
-#'@param whole_words_only do you want to pad your keys with whitespace to find
+#' @param to_lower are your keys case sensitive? If so, this should be false.
+#' @param whole_words_only do you want to pad your keys with whitespace to find
 #'  only those that are whole words? If so select this should be true
-#'@return a reference class object of class node from the data.tree package.
-#'@examples
+#' @return a reference class object of class node from the data.tree package.
+#' @export
+#' @examples
 #'keys <- c("a", "ab", "bab", "bc", "bca", "c", "caa", "abc")
 #'values <- c("foo", "bar", "foo", "bar", "foo", "bar", "foo", "bar")
 #'example_trie <- trie_create(keys, value = values)
@@ -123,9 +123,6 @@ trie_create <- function(keys, values, to_lower = TRUE, whole_words_only = TRUE){
   }
   
   trie
-    
   
 }
-
-
 

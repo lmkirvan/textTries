@@ -21,3 +21,4 @@ Imports: stringr,
 Depdends: data.tree
 Suggests: testthat
 Depends: data.tree
+RoxygenNote: 6.0.1
