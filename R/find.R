@@ -8,7 +8,8 @@
 #' @export
 #'
 #' @examples
-trie_find <- function(document, trie, border_chars = c("!", ",", ".", "?", ";", ":", "\n", "\t"), raw = F){
+trie_find <- function(document, trie, border_chars = c("!", ",", ".", "?", ";", ":", "\n", "\t", "(", ")",
+                                                       "/", "\\", "'", "[", "]", "&", "+", "@", "-"), raw = F){
   
   characters <- purrr::flatten_chr(stringr::str_split(document, ""))
   
@@ -115,7 +116,7 @@ rebuild_document <- function(document, df){
   dimnames(not_inverted) <- list(NULL, c("start", "end"))
   inverted <- stringr::invert_match(not_inverted)
   
-  other_text <- stringr::str_sub(text, start = inverted) 
+  other_text <- stringr::str_sub(document, start = inverted) 
   
   final <- c(rbind(other_text, df$value))
   final <- stringr::str_c(final, collapse = "")
